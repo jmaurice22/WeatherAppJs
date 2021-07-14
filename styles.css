@@ -59,7 +59,6 @@ section#weather {
    min-height: 400px;
    border-top: none;
 }
-
 div#city {
     color: rgb(24, 12, 1);
     font-size: 2.3em;
