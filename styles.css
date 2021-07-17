@@ -60,7 +60,6 @@ section#weather {
     border: solid 1px;
     border-radius: 50px;
     min-height: 400px;
-    border-top: none;
     padding: 10px;
 }
 section#weather > label {
