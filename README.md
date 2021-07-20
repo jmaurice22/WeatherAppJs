@@ -2,5 +2,7 @@
 
 Weather Application built using HTML/CSS/Javascript
 
+NO frameworks
+
 #API
-OpenWeather.org
+Weatherbit.io
