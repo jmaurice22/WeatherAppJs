@@ -25,8 +25,8 @@ async function getWeather(e) {
   // Error handling
 
   let response = await fetch(url);
-  if (response.status === '"success' ){
-
+  // TRY/CATCH FOR ERROR HANDLING
+  try{
     // CHANGE THE RESPONSE OBJ TO JSON   
     let data = await response.json();
     // EXTRACT DATA FROM RES OBJ
@@ -35,22 +35,19 @@ async function getWeather(e) {
     let feel = data.data[0]['app_temp'];
     let windSpeed = data.data[0]['wind_spd'];
     let precip = data.data[0]['precip'];
-    // POST VALUE TO THE DOM
+    // POST VALUES TO THE DOM
     loc = document.getElementById('city').textContent = cityName;
-    tempEl = document.getElementById('temperature').textContent = temperature + 'F';
-    feelEL = document.getElementById('feelsLike').textContent = feel;
-    wind = document.getElementById('maxTemp').textContent = windSpeed;
-    precip = document.getElementById('minTemp').textContent = precip;
-  } 
-  else  {
-    alert("Could not complete request");
+    tempEl = document.getElementById('temperature').textContent = temperature + ' F';
+    feelEL = document.getElementById('feelsLike').textContent = feel + ' F';
+    wind = document.getElementById('maxTemp').textContent = windSpeed + ' Knts';
+    precip = document.getElementById('minTemp').textContent = precip + '%';
+   
   }
-  reset();
-  
-  
-}
-
-function reset() {
-  
+  catch (e){
+    // ALERT MESSAGE IF REQUEST FAILS
+    alert("Weather Data Unavialable. Please try a new search.")
+  }
+  // RESET INPUT ELEMENT VALUE TO AN EMPTY STRING
   document.getElementById('searchBar').value = "" ;
+
 }
