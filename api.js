@@ -35,13 +35,21 @@ async function getWeather(e) {
     let feel = data.data[0]['app_temp'];
     let windSpeed = data.data[0]['wind_spd'];
     let precip = data.data[0]['precip'];
+    let description = data.data[0]['weather']['description'];
     // POST VALUES TO THE DOM
-    loc = document.getElementById('city').textContent = cityName;
-    tempEl = document.getElementById('temperature').textContent = temperature + ' F';
-    feelEL = document.getElementById('feelsLike').textContent = feel + ' F';
-    wind = document.getElementById('maxTemp').textContent = windSpeed + ' Knts';
-    precip = document.getElementById('minTemp').textContent = precip + '%';
+    document.getElementById('city').textContent = cityName;
+    document.getElementById('temperature').textContent = Math.floor(temperature) + ' F';
+    document.getElementById('feelsLike').textContent = Math.floor(feel) + ' F';
+    document.getElementById('maxTemp').textContent = Math.floor(windSpeed) + ' Knts';
+    document.getElementById('minTemp').textContent = Math.floor(precip) + '%';
+    document.getElementById('description').textContent = description;
    
+    document.getElementById('city').style.color = '#fff';
+    document.getElementById('temperature').style.color = "white";
+    document.getElementById('feelsLike').style.color = "white";
+    document.getElementById('maxTemp').style.color = "white";
+    document.getElementById('minTemp').style.color = "white";
+    document.getElementById('description').style.color = "white";
   }
   catch (e){
     // ALERT MESSAGE IF REQUEST FAILS

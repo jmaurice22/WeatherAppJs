@@ -13,7 +13,7 @@ body {
     font-weight: 500;
 
     background: rgb(0,27,36);
-    background: linear-gradient(90deg, rgba(0,27,36,1) 24%, rgba(121,9,118,1) 45%, rgba(0,212,255,1) 83%); 
+    background: linear-gradient(90deg, rgba(2, 7, 39, 0.932) 24%, rgba(121,9,118,1) 45%, rgba(0,212,255,1) 83%); 
 }
 /* HEADER STYLES */
 header {
@@ -31,7 +31,7 @@ header h1 {
 
 header label#searchLabel {
     font-size: 1.9em;
-    color: rgba(149, 240, 29, 0.877);
+    color: rgba(214, 218, 210, 0.336);
 }
 
 header input#searchBar {
@@ -42,17 +42,20 @@ header input#searchBar {
     font-size: 1.6em;
     text-align: center;
 } 
-
+/* BUTTON */
 button#searchButton {
     font-size: 1.1em;
     height: 2.65rem;
-    width: 250px;
+    min-width: 250px;
+    border:none;
+    border-radius: 10px 10px;
+    background-color:lawngreen;
 }
 
 /* SECTION STYLES */
 section#weather {
     display: flex;
-    background-color: rgba(209, 204, 202, 0.24);
+    background-color: rgba(209, 204, 202, 0.158);
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
@@ -66,19 +69,31 @@ section#weather {
     padding: 10px;
 }
 section#weather > label {
-    color:rgb(27, 13, 75);
+    color:rgb(176, 174, 182);
     font-weight: bolder;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 1.5rem;
+    font-size: 2.5em;
+}
+
+section#weather div:not(:first-child, :last-child) {
+    letter-spacing: 0.1em;
+    font-size: 1.6em;
+    font-weight: 500;
+    line-height: 1.7;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    border-bottom: 2px solid white;
 }
 div#city {
     color: rgba(182, 189, 245, 0.904);
-    font-size: 2.3em;
+    font-size: 5.3em;
 }
 
 div#cityBackground {
     background-color: rgb(27,13,75);
     width: 100%;
+    min-height: 100px;
     margin-top: 0;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
@@ -89,8 +104,11 @@ div#cityBackground {
 div#description {
     padding:20px;
     text-align: center;
-    font-weight: bolder;
-    color:rgb(109, 101, 99);
+    font-weight: 500;
+    font-size: 1.8em;
+    color:rgba(192, 186, 185, 0.877);
+    border: none;
+  
 }
 
 
