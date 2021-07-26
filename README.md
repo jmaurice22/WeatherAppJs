@@ -1,8 +1,9 @@
 # WeatherAppJs
 
-Weather Application built using HTML/CSS/Javascript
+Weather Web Application built using HTML/CSS/Javascript
 
-NO frameworks
+#API Service 
+weatherbit.io
 
-#API
-Weatherbit.io
+#Hosted @
+http://www.public.asu.edu/~jpostell/WeatherApp/index.html
