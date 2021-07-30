@@ -1,9 +1,7 @@
-/*
-API Key = "48b1d0ac40664100a210c1d87ff1f450"
-PROVIDER = WEATHERBIT.IO
-*/
-
-
+// Set focus on textbox
+window.onload = function() {
+  document.getElementById("searchBar").focus();
+};
 
 /* Button Element*/
 let button = document.getElementById("searchButton");
@@ -13,13 +11,15 @@ button.addEventListener("click", getWeather);
 /*Get the input element AND VALUE*/
 let searchBar = document.getElementById("searchBar");
 
+let key = '48b1d0ac40664100a210c1d87ff1f450';
 
+// Get Forecast
 async function getWeather(e) {        
   e.preventDefault();
   let searchValue = searchBar.value;
 
   // URL
-  let url = `https://api.weatherbit.io/v2.0/current?city=${searchValue}&country=US&units=I&key=48b1d0ac40664100a210c1d87ff1f450`;
+  let url = `https://api.weatherbit.io/v2.0/current?city=${searchValue}&country=US&units=I&key=${key}`;
   
   // REQUEST & Error Handling
   let response = await fetch(url);
