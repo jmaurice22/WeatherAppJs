@@ -37,6 +37,7 @@ header label#searchLabel {
 header input#searchBar {
     padding: 10px;
     background-color: rgba(231, 236, 238, 0.911);
+    border-radius: 50px;
     margin-bottom: 20px;
     width: 30%;
     font-size: 1.6em;
@@ -48,7 +49,7 @@ button#searchButton {
     height: 2.65rem;
     min-width: 250px;
     border:none;
-    border-radius: 10px 10px;
+    border-radius: 50px;
     background-color:lawngreen;
 }
 
@@ -59,20 +60,22 @@ section#weather {
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    margin-top: 5%;
-    margin-left: 25%;
-    margin-right: 25%;
+    margin-top: 2%;
+    margin-left: 30%;
+    margin-right: 30%;
     margin-bottom: 10%;
-    border: solid 1px;
+    border: solid 1px white;
     border-radius: 50px;
-    min-height: 400px;
+    min-height: 700px;
     padding: 10px;
+    
 }
 section#weather > label {
     color:rgb(176, 174, 182);
     font-weight: bolder;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 2.5em;
+    font-size: 1.5em;
+   
 }
 
 section#weather div:not(:first-child, :last-child) {
@@ -87,7 +90,7 @@ section#weather div:not(:first-child, :last-child) {
 }
 div#city {
     color: rgba(182, 189, 245, 0.904);
-    font-size: 5.3em;
+    font-size: 3.3em;
 }
 
 div#cityBackground {
