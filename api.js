@@ -10,6 +10,14 @@ button.addEventListener("click", getWeather);
 
 /*Get the input element AND VALUE*/
 let searchBar = document.getElementById("searchBar");
+// Eventlistner for textbox to call function when enter key is pressed
+searchBar.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    document.getElementById("searchButton").click();
+   }
+ });
+
 
 let key = '48b1d0ac40664100a210c1d87ff1f450';
 
@@ -38,15 +46,15 @@ async function getWeather(e) {
     document.getElementById('city').textContent = cityName;
     document.getElementById('temperature').textContent = Math.floor(temperature) + ' F';
     document.getElementById('feelsLike').textContent = Math.floor(feel) + ' F';
-    document.getElementById('maxTemp').textContent = Math.floor(windSpeed) + ' Knts';
-    document.getElementById('minTemp').textContent = Math.floor(precip) + '%';
+    document.getElementById('windspeed').textContent = Math.floor(windSpeed) + ' Knts';
+    document.getElementById('precipitation').textContent = Math.floor(precip) + '%';
     document.getElementById('description').textContent = description;
    
     document.getElementById('city').style.color = '#fff';
     document.getElementById('temperature').style.color = "white";
     document.getElementById('feelsLike').style.color = "white";
-    document.getElementById('maxTemp').style.color = "white";
-    document.getElementById('minTemp').style.color = "white";
+    document.getElementById('windspeed').style.color = "white";
+    document.getElementById('precipitation').style.color = "white";
     document.getElementById('description').style.color = "white";
   }
   catch (e){
