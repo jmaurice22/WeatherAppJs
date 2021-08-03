@@ -5,7 +5,7 @@ Weather Web Application built using HTML/CSS/Javascript
 #API Service 
 weatherbit.io
 
-#Hosted@
+Hosted @
 
 http://www.public.asu.edu/~jpostell/WeatherApp/index.html
 
