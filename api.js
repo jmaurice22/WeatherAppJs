@@ -7,11 +7,14 @@ window.onload = function() {
 let searchBar = document.getElementById("searchBar");
 // Eventlistner for textbox to call function when enter key is pressed
 searchBar.addEventListener("keyup", function(event) {
-  if (event.keyCode === 13) {
+  if (event.key === 'Enter') {
     event.preventDefault();
     document.getElementById("searchButton").click();
   }
 });
+// TODO: Add Dropdownlist element 
+// set value of selected to variable
+// pass selected value to getweather() url as argument
 
 /* Button Element*/
 let button = document.getElementById("searchButton");
@@ -20,6 +23,8 @@ button.addEventListener("click", () => {
   userlocation = searchBar.value;
   getWeather(userlocation);
 } );
+
+
 
 // Get user lat/long coordinates 
 function getCoordintes() {
@@ -94,6 +99,7 @@ async function getWeather(location) {
     let precip = data.data[0]['precip'];
     let description = data.data[0]['weather']['description'];
     // POST VALUES TO THE DOM
+    //TODO: Set selected state to match city
     document.getElementById('city').textContent = cityName;
     document.getElementById('temperature').textContent = Math.floor(temperature) + ' \xB0' + 'F';
     document.getElementById('feelsLike').textContent = Math.floor(feel) + ' \xB0' +'F';
