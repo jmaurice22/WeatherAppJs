@@ -5,15 +5,14 @@
 body {
     display: block;
     margin: 0;
+    margin-top: 50px;
     padding: 0;
     box-sizing: border-box;
-    background-color: rgb(206, 197, 197);
-    font-size: 12pt;
+    background-color:#fff;
+    font-size: 16px;
     font-family: 'Prompt', sans-serif;
     font-weight: 500;
-
-    background: rgb(0,27,36);
-    background: linear-gradient(90deg, rgba(2, 7, 39, 0.932) 24%, rgba(121,9,118,1) 45%, rgba(0,212,255,1) 83%); 
+    background: radial-gradient(circle at 100%, rgba(7, 22, 238, 0.767), rgb(14, 86, 180) 50%, rgba(16, 74, 226, 0.897) 75%, rgb(16, 12, 233) 75%);
 }
 /* HEADER STYLES */
 header {
@@ -29,6 +28,7 @@ header h1 {
     text-decoration: underline;
 }
 
+
 header label#searchLabel {
     font-size: 1.9em;
     color: rgba(214, 218, 210, 0.336);
@@ -39,7 +39,8 @@ header input#searchBar {
     background-color: rgba(231, 236, 238, 0.911);
     border-radius: 50px;
     margin-bottom: 20px;
-    width: 30%;
+    width: 35%;
+    min-width: 300px;
     font-size: 1.6em;
     text-align: center;
 } 
@@ -122,14 +123,14 @@ div#description {
     button#searchButton {
         font-size: 14pt;
         height: 2.65em;
-        min-width: 150px;
+        width: 100%;
         border:none;
         border-radius: 50px;
         background-color:lawngreen;
     }
 
     header input#searchBar {
-       min-width: 200px;
+        width: 100%;
     } 
 
     section#weather {
