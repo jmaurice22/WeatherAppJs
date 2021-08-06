@@ -36,8 +36,6 @@ function getCoordintes() {
 		let coordinates = [lat, lng];
 		console.log(`Latitude: ${lat}, Longitude: ${lng}`);
 		getCity(coordinates);
-		return;
-
 	}
 
 	function error(err) {
@@ -68,7 +66,6 @@ function getCity(coordinates) {
       console.log("Current Location is " + city + " " + state)
       // Call weather function passing city & state arguments
       getWeather(city + ', ' + state);
-			return;
 		}
 	}
 }
