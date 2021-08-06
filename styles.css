@@ -72,10 +72,10 @@ section#weather {
     
 }
 section#weather > label {
-    color:rgb(176, 174, 182);
+    color:rgba(29, 228, 211, 0.925);
     font-weight: bolder;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 1.5em;
+    font-size: 2.5em;
    
 }
 
