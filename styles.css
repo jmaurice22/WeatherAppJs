@@ -14,6 +14,7 @@ body {
     font-weight: 500;
     background: radial-gradient(circle at 100%, rgba(7, 22, 238, 0.767), rgb(14, 86, 180) 50%, rgba(16, 74, 226, 0.897) 75%, rgb(16, 12, 233) 75%);
 }
+    
 /* HEADER STYLES */
 header {
     display: flex;
@@ -21,12 +22,20 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 30px;
+    padding: 0px;
 }
 header h1 {
     color: rgb(224, 39, 26);
     text-decoration: underline;
 }
+
+header div#headerRow {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* padding: 30px; */
+}
+
 
 
 header label#searchLabel {
@@ -39,11 +48,33 @@ header input#searchBar {
     background-color: rgba(231, 236, 238, 0.911);
     border-radius: 50px;
     margin-bottom: 20px;
+    width: 1000%;
     width: 35%;
     min-width: 300px;
     font-size: 1.6em;
-    text-align: center;
+    text-align: left;
+    padding: 10px 10px 10px 20px;
 } 
+
+header select#stateAbbreviations {
+    font-size: 1.1em;
+    height: 2.65rem;
+    min-width: 15%;
+    border:none;
+    border-radius: 50px;
+    margin-right: 10px;
+    padding-left: 15px;
+    cursor: pointer;
+    background-color: #887d7d52;
+    color: #fff;
+}
+
+
+select#stateAbbreviations  > option {
+    background-color: rgb(14, 86, 180, 0.5) ;
+    color:#fff;
+}
+
 /* BUTTON */
 button#searchButton {
     font-size: 1.1em;
@@ -51,7 +82,8 @@ button#searchButton {
     min-width: 250px;
     border:none;
     border-radius: 50px;
-    background-color:lawngreen;
+    background-color:rgba(126, 252, 0, 0.521);
+    
 }
 
 /* SECTION STYLES */
@@ -75,8 +107,8 @@ section#weather > label {
     color:rgba(29, 228, 211, 0.925);
     font-weight: bolder;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 2.5em;
-   
+    font-size: 2.5rem;
+    font-size: 2.5em;   
 }
 
 section#weather div:not(:first-child, :last-child) {
