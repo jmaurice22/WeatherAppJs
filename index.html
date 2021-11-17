@@ -8,7 +8,6 @@
     <link href="styles.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/aa44df7a7d.js" crossorigin="anonymous"></script>
-    <script src="api.js" async></script>
     <title>Weather App</title>
 </head>
 
@@ -16,7 +15,7 @@
     
     <header>
         <div id="headerRow">
-
+            
             <input name="city-search" id="searchBar" placeholder="Search..." />
         </div><!-- <label for="city-search" id="searchLabel">Enter city and state</label> -->
         <div id="headerRow">
@@ -76,15 +75,13 @@
             </select>				
             <button id="searchButton" ><i class="fas fa-location-arrow"></i> Search</button>
         </div>
-
-    
+        
+        
     </header>
-
+    
     <section id="weather">
         <div id="cityBackground">
-            <div id="city">
-                
-            </div>
+            <div id="city"></div>
         </div>
         <label for="temperature">Current</label>
         <div id="temperature">
@@ -100,8 +97,8 @@
         </div>
         <div id="description">
         </div>
-    </section>
-
+    </section> 
+    <script src="api.js"></script>
 </body>
 
 </html>
