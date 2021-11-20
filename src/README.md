@@ -8,4 +8,4 @@ weatherbit.io
 ***Note geolocation will not work on non https connections**
 
 # Hosted on Microsoft Azure
-proud-bay-0f258aa1e.azurestaticapps.net
+https://proud-bay-0f258aa1e.azurestaticapps.net/
