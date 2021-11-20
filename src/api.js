@@ -140,7 +140,6 @@ async function getForecast(userlocation, state) {
     let precip = data.data[0]['precip'];
     let description = data.data[0]['weather']['description'];
     // POST VALUES TO THE DOM
-    //TODO: Set selected state to match city
     document.getElementById('city').textContent = cityName;
     document.getElementById('temperature').textContent = Math.floor(temperature) + ' \xB0' + 'F';
     document.getElementById('feelsLike').textContent = Math.floor(feel) + ' \xB0' +'F';
