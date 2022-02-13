@@ -78,7 +78,7 @@ function locationWeather() {
       let precip = data.data[0]['precip'];
       let description = data.data[0]['weather']['description'];
       // POST VALUES TO THE DOM
-      //TODO: Set selected state to match city
+      
       document.getElementById('city').textContent = cityName;
       document.getElementById('temperature').textContent = Math.floor(temperature) + ' \xB0' + 'F';
       document.getElementById('feelsLike').textContent = Math.floor(feel) + ' \xB0' +'F';
@@ -92,17 +92,31 @@ function locationWeather() {
       document.getElementById('windspeed').style.color = "white";
       document.getElementById('precipitation').style.color = "white";
       document.getElementById('description').style.color = "white";
+
+      setBackground(temperature)
     }
     catch (e){
       // ALERT MESSAGE IF REQUEST FAILS
       alert("Weather Data Unavialable. Please try a new search.")
+      
     }
     // RESET INPUT ELEMENT VALUE TO AN EMPTY STRING
     document.getElementById('searchBar').value = "" ;
     document.getElementById('stateAbbreviations').selectedIndex = 0;
-
+   
   }
 }
+
+
+function setBackground(weatehrval) {
+  if (weatehrval > 70) {
+    document.body.style.background = "red"
+  }
+  else if (weatehrval < 45) {
+    document.body.style.background = "#66a3ff"
+  }
+}
+
 
 
 /* Dropdown */ 
@@ -153,10 +167,12 @@ async function getForecast(userlocation, state) {
     document.getElementById('windspeed').style.color = "white";
     document.getElementById('precipitation').style.color = "white";
     document.getElementById('description').style.color = "white";
+
+    setBackground(temperature)
   }
   catch (e){
     // ALERT MESSAGE IF REQUEST FAILS
-    alert("Weather Data Unavialable. Please try a new search.")
+    alert("Weather Data Unavialable. Please try a new search and include a state.")
   }
   // RESET INPUT ELEMENT VALUE TO AN EMPTY STRING
   document.getElementById('searchBar').value = "" ;
