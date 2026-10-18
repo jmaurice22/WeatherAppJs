@@ -21,7 +21,15 @@ describe('WeatherComponent', () => {
     await fixture.whenStable();
   };
 
+  const getCurrentPosition = vi.fn();
+
   beforeEach(async () => {
+    getCurrentPosition.mockReset();
+    Object.defineProperty(navigator, 'geolocation', {
+      configurable: true,
+      value: { getCurrentPosition },
+    });
+    vi.spyOn(console, 'log').mockImplementation(() => {});
     vi.spyOn(console, 'warn').mockImplementation(() => {});
     vi.spyOn(console, 'error').mockImplementation(() => {});
     await TestBed.configureTestingModule({
@@ -40,6 +48,7 @@ describe('WeatherComponent', () => {
     element.remove();
     document.body.classList.remove('bg-hot', 'bg-cold');
     vi.restoreAllMocks();
+    delete (navigator as { geolocation?: Geolocation }).geolocation;
   });
 
   it('focuses the search bar on init', () => {
@@ -110,5 +119,103 @@ describe('WeatherComponent', () => {
       'Weather Data Unavailable. Please try a new search and include a state.',
     );
     expect(element.querySelector<HTMLInputElement>('#searchBar')!.value).toBe('');
+  });
+
+  it('keeps working after a failed search without reloading', async () => {
+    const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
+    await search('Nowhere', 'TX');
+    httpTesting
+      .expectOne((r) => r.url === WEATHERBIT_URL)
+      .flush({ error: 'bad key' }, { status: 403, statusText: 'Forbidden' });
+    await fixture.whenStable();
+    expect(alertSpy).toHaveBeenCalledTimes(1);
+
+    await search('Austin', 'TX');
+    httpTesting
+      .expectOne((r) => r.url === WEATHERBIT_URL)
+      .flush({
+        count: 1,
+        data: [
+          {
+            city_name: 'Austin',
+            temp: 60,
+            app_temp: 60,
+            wind_spd: 5,
+            precip: 0,
+            weather: { description: 'Clouds' },
+          },
+        ],
+      });
+    await fixture.whenStable();
+    expect(element.querySelector('#city')?.textContent?.trim()).toBe('Austin');
+    expect(element.querySelector<HTMLButtonElement>('#searchButton')!.textContent).toContain(
+      'Search',
+    );
+  });
+
+  it('only applies the latest search when searches overlap', async () => {
+    await search('Dallas', 'TX');
+    await search('Fargo', 'ND');
+    const [first, second] = httpTesting.match((r) => r.url === WEATHERBIT_URL);
+    expect(first.cancelled).toBe(true);
+    second.flush({
+      count: 1,
+      data: [
+        {
+          city_name: 'Fargo',
+          temp: 20,
+          app_temp: 10,
+          wind_spd: 12,
+          precip: 0,
+          weather: { description: 'Snow' },
+        },
+      ],
+    });
+    await fixture.whenStable();
+    expect(element.querySelector('#city')?.textContent?.trim()).toBe('Fargo');
+  });
+
+  it('alerts instead of searching when the city is empty', async () => {
+    const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
+    await search('   ', 'TX');
+    httpTesting.expectNone((r) => r.url === WEATHERBIT_URL);
+    expect(alertSpy).toHaveBeenCalledWith('Please enter a city.');
+  });
+
+  it('shows a location error and retries geolocation without reloading', async () => {
+    expect(getCurrentPosition).toHaveBeenCalledTimes(1);
+    const [, onError] = getCurrentPosition.mock.calls[0];
+    onError({ code: 3, message: 'Timeout expired' });
+    await fixture.whenStable();
+    expect(element.querySelector('#locationError')?.textContent).toContain('Timeout expired');
+
+    getCurrentPosition.mockImplementation((onSuccess: PositionCallback) =>
+      onSuccess({ coords: { latitude: 30.27, longitude: -97.74 } } as GeolocationPosition),
+    );
+    element.querySelector<HTMLButtonElement>('#locationButton')!.click();
+    await fixture.whenStable();
+    expect(element.querySelector('#locationError')).toBeNull();
+
+    httpTesting
+      .expectOne((r) => r.url === 'https://us1.locationiq.com/v1/reverse.php')
+      .flush({ address: { city: 'Austin', state: 'Texas' } });
+    const weatherReq = httpTesting.expectOne((r) => r.url === WEATHERBIT_URL);
+    expect(weatherReq.request.params.get('city')).toBe('Austin, Texas');
+    expect(weatherReq.request.params.has('state')).toBe(false);
+    weatherReq.flush({
+      count: 1,
+      data: [
+        {
+          city_name: 'Austin',
+          temp: 85,
+          app_temp: 88,
+          wind_spd: 7,
+          precip: 0,
+          weather: { description: 'Clear sky' },
+        },
+      ],
+    });
+    await fixture.whenStable();
+    expect(element.querySelector('#city')?.textContent?.trim()).toBe('Austin');
   });
 });

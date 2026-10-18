@@ -52,6 +52,28 @@ button#searchButton {
   background-color: rgba(126, 252, 0, 0.521);
 }
 
+button#locationButton {
+  margin-top: 12px;
+  font-size: 1em;
+  padding: 6px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50px;
+  background-color: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+button#locationButton:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+p#locationError {
+  margin: 12px 20px 0;
+  color: #fff;
+  text-align: center;
+}
+
 /* SECTION STYLES */
 section#weather {
   display: flex;
@@ -119,10 +141,21 @@ div#description {
     font-size: 14pt;
   }
 
+  header .header-row:not(#locationRow) {
+    flex-direction: column;
+    width: 90%;
+  }
+
+  header select#stateAbbreviations {
+    width: 100%;
+    margin: 0 0 10px;
+  }
+
   button#searchButton {
     font-size: 14pt;
     height: 2.65em;
     width: 100%;
+    min-width: 0;
     border: none;
     border-radius: 50px;
     background-color: lawngreen;
@@ -130,6 +163,8 @@ div#description {
 
   header input#searchBar {
     width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   section#weather {

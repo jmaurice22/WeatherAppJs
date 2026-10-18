@@ -16,9 +16,18 @@
       }
     </select>
     <button id="searchButton" type="button" (click)="search()">
-      <i class="fas fa-location-arrow"></i> Search
+      <i class="fas fa-location-arrow"></i> {{ loading() ? 'Searching...' : 'Search' }}
     </button>
   </div>
+  <div class="header-row" id="locationRow">
+    <button id="locationButton" type="button" [disabled]="locating()" (click)="useMyLocation()">
+      <i class="fas fa-crosshairs"></i>
+      {{ locating() ? 'Locating...' : 'Use my location' }}
+    </button>
+  </div>
+  @if (locationError(); as message) {
+    <p id="locationError" role="alert">{{ message }}</p>
+  }
 </header>
 
 @let weather = display();

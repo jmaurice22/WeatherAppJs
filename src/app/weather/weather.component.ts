@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
+import { catchError, defer, EMPTY, finalize, Subject, switchMap, tap } from 'rxjs';
 import { US_STATES } from './us-states';
 import { WeatherbitObservation } from './weather.models';
 import { WeatherService } from './weather.service';
@@ -25,6 +26,12 @@ const GEOLOCATION_OPTIONS: PositionOptions = {
 
 const HOT_THRESHOLD_F = 70;
 const COLD_THRESHOLD_F = 45;
+
+interface WeatherRequest {
+  city: string;
+  state?: string;
+  errorMessage: string;
+}
 
 @Component({
   selector: 'app-weather',
@@ -39,11 +46,15 @@ export class WeatherComponent {
   private readonly renderer = inject(Renderer2);
 
   private readonly searchBar = viewChild.required<ElementRef<HTMLInputElement>>('searchBar');
+  private readonly weatherRequests = new Subject<WeatherRequest>();
 
   protected readonly states = US_STATES;
   protected readonly city = signal('');
   protected readonly selectedState = signal('');
   protected readonly weather = signal<WeatherbitObservation | null>(null);
+  protected readonly locating = signal(false);
+  protected readonly loading = signal(false);
+  protected readonly locationError = signal<string | null>(null);
 
   protected readonly display = computed(() => {
     const weather = this.weather();
@@ -85,70 +96,100 @@ export class WeatherComponent {
       onCleanup(() => this.renderer.removeClass(body, className));
     });
 
+    // switchMap keeps only the latest request in flight; errors are caught per
+    // request so a failure never terminates the stream and later searches still work.
+    this.weatherRequests
+      .pipe(
+        switchMap((request) =>
+          defer(() => {
+            this.loading.set(true);
+            return this.weatherService.getCurrentWeather(request.city, request.state);
+          }).pipe(
+            tap((weather) => this.weather.set(weather)),
+            catchError((err) => {
+              console.error(err);
+              alert(request.errorMessage);
+              return EMPTY;
+            }),
+            finalize(() => {
+              this.loading.set(false);
+              this.resetInputs();
+            }),
+          ),
+        ),
+        takeUntilDestroyed(),
+      )
+      .subscribe();
+
     afterNextRender(() => {
       this.searchBar().nativeElement.focus();
-      this.loadLocationWeather();
+      this.useMyLocation();
     });
   }
 
   protected search(): void {
-    this.fetchWeather(
-      this.city().trim(),
-      this.selectedState() || undefined,
-      'Weather Data Unavailable. Please try a new search and include a state.',
-    );
+    const city = this.city().trim();
+    if (!city) {
+      alert('Please enter a city.');
+      this.searchBar().nativeElement.focus();
+      return;
+    }
+    this.weatherRequests.next({
+      city,
+      state: this.selectedState() || undefined,
+      errorMessage: 'Weather Data Unavailable. Please try a new search and include a state.',
+    });
   }
 
-  private loadLocationWeather(): void {
+  protected useMyLocation(): void {
+    this.locationError.set(null);
+
     if (!('geolocation' in navigator)) {
-      console.warn('Geolocation is not supported by this browser.');
+      this.failLocation('Geolocation is not supported by this browser.');
       return;
     }
 
+    this.locating.set(true);
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         console.log(`Latitude: ${coords.latitude}, Longitude: ${coords.longitude}`);
         this.weatherService
           .reverseGeocode(coords.latitude, coords.longitude)
-          .pipe(takeUntilDestroyed(this.destroyRef))
+          .pipe(
+            finalize(() => this.locating.set(false)),
+            takeUntilDestroyed(this.destroyRef),
+          )
           .subscribe({
             next: ({ address }) => {
               const city = address.city ?? address.town ?? address.village;
               const state = address.state;
               console.log(`Current Location is ${city} ${state}`);
               if (!city) {
-                console.warn('Reverse geocoding did not return a city.');
+                this.failLocation('Could not determine your city.');
                 return;
               }
-              this.fetchWeather(
-                state ? `${city}, ${state}` : city,
-                undefined,
-                'Weather Data Unavailable. Please try a new search.',
-              );
+              this.weatherRequests.next({
+                city: state ? `${city}, ${state}` : city,
+                errorMessage: 'Weather Data Unavailable. Please try a new search.',
+              });
             },
-            error: (err) => console.warn('Reverse geocoding failed', err),
+            error: (err) => {
+              console.warn('Reverse geocoding failed', err);
+              this.failLocation('Could not look up your location.');
+            },
           });
       },
-      (err) => console.warn(`ERROR(${err.code}): ${err.message}`),
+      (err) => {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+        this.locating.set(false);
+        this.failLocation(`Could not get your location (${err.message}).`);
+      },
       GEOLOCATION_OPTIONS,
     );
   }
 
-  private fetchWeather(city: string, state: string | undefined, errorMessage: string): void {
-    this.weatherService
-      .getCurrentWeather(city, state)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (weather) => {
-          this.weather.set(weather);
-          this.resetInputs();
-        },
-        error: (err) => {
-          console.error(err);
-          alert(errorMessage);
-          this.resetInputs();
-        },
-      });
+  private failLocation(message: string): void {
+    this.locationError.set(`${message} Search for a city or try again.`);
   }
 
   private resetInputs(): void {
