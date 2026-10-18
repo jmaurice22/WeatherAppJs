@@ -1,0 +1,62 @@
+<header>
+  <div class="header-row">
+    <input
+      #searchBar
+      name="city-search"
+      id="searchBar"
+      placeholder="Search..."
+      [(ngModel)]="city"
+    />
+  </div>
+  <div class="header-row">
+    <select name="select-dropdown" id="stateAbbreviations" [(ngModel)]="selectedState">
+      <option value="">Select</option>
+      @for (state of states; track state.code) {
+        <option [value]="state.code">{{ state.name }}</option>
+      }
+    </select>
+    <button id="searchButton" type="button" (click)="search()">
+      <i class="fas fa-location-arrow"></i> Search
+    </button>
+  </div>
+</header>
+
+@let weather = display();
+<section id="weather">
+  <div id="cityBackground">
+    <div id="city">
+      @if (weather) {
+        {{ weather.city }}
+      }
+    </div>
+  </div>
+  <label for="temperature">Current</label>
+  <div id="temperature">
+    @if (weather) {
+      {{ weather.temperature }}
+    }
+  </div>
+  <label for="feelsLike">Feels Like</label>
+  <div id="feelsLike">
+    @if (weather) {
+      {{ weather.feelsLike }}
+    }
+  </div>
+  <label for="windspeed">Wind Speed</label>
+  <div id="windspeed">
+    @if (weather) {
+      {{ weather.windSpeed }}
+    }
+  </div>
+  <label for="precipitation">Chance of Rain</label>
+  <div id="precipitation">
+    @if (weather) {
+      {{ weather.precipitation }}
+    }
+  </div>
+  <div id="description">
+    @if (weather) {
+      {{ weather.description }}
+    }
+  </div>
+</section>
