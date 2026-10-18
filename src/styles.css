@@ -3,173 +3,28 @@
 /* Global Styles */
 
 body {
-    display: block;
-    margin: 0;
-    margin-top: 50px;
-    padding: 0;
-    box-sizing: border-box;
-    /* background-color:#fff; */
-    font-size: 16px;
-    font-family: 'Prompt', sans-serif;
-    font-weight: 500;
-    background: radial-gradient(circle at 100%, rgba(7, 22, 238, 0.767), rgb(14, 86, 180) 50%, rgba(16, 74, 226, 0.897) 75%, rgb(16, 12, 233) 75%);
-}
-    
-/* HEADER STYLES */
-header {
-    display: flex;
-    /* background-color: rgb(27, 13, 75); */
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-}
-header h1 {
-    color: rgb(224, 39, 26);
-    text-decoration: underline;
+  display: block;
+  margin: 0;
+  margin-top: 50px;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: 'Prompt', sans-serif;
+  font-weight: 500;
+  background: radial-gradient(
+    circle at 100%,
+    rgba(7, 22, 238, 0.767),
+    rgb(14, 86, 180) 50%,
+    rgba(16, 74, 226, 0.897) 75%,
+    rgb(16, 12, 233) 75%
+  );
 }
 
-header div#headerRow {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    /* padding: 30px; */
+/* Temperature-based backgrounds, toggled by WeatherComponent */
+body.bg-hot {
+  background: red;
 }
 
-
-
-header label#searchLabel {
-    font-size: 1.9em;
-    color: rgba(214, 218, 210, 0.336);
+body.bg-cold {
+  background: #66a3ff;
 }
-
-header input#searchBar {
-    padding: 10px;
-    background-color: rgba(231, 236, 238, 0.911);
-    border-radius: 50px;
-    margin-bottom: 20px;
-    width: 1000%;
-    width: 35%;
-    min-width: 300px;
-    font-size: 1.6em;
-    text-align: left;
-    padding: 10px 10px 10px 20px;
-} 
-
-header select#stateAbbreviations {
-    font-size: 1.1em;
-    height: 2.65rem;
-    min-width: 15%;
-    border:none;
-    border-radius: 50px;
-    margin-right: 10px;
-    padding-left: 15px;
-    cursor: pointer;
-    background-color: #887d7d52;
-    color: #fff;
-}
-
-
-select#stateAbbreviations  > option {
-    background-color: rgb(14, 86, 180, 0.5) ;
-    color:#fff;
-}
-
-/* BUTTON */
-button#searchButton {
-    font-size: 1.1em;
-    height: 2.65rem;
-    min-width: 250px;
-    border:none;
-    border-radius: 50px;
-    background-color:rgba(126, 252, 0, 0.521);
-    
-}
-
-/* SECTION STYLES */
-section#weather {
-    display: flex;
-    background-color: rgba(209, 204, 202, 0.158);
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    margin-top: 2%;
-    margin-left: 30%;
-    margin-right: 30%;
-    margin-bottom: 10%;
-    border: solid 1px white;
-    border-radius: 50px;
-    min-height: 700px;
-    padding: 10px;
-    
-}
-section#weather > label {
-    color:rgba(29, 228, 211, 0.925);
-    font-weight: bolder;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 2.5rem;
-    font-size: 2.5em;   
-}
-
-section#weather div:not(:first-child, :last-child) {
-    letter-spacing: 0.1em;
-    font-size: 1.6em;
-    font-weight: 500;
-    line-height: 1.7;
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    border-bottom: 2px solid white;
-}
-div#city {
-    color: rgba(182, 189, 245, 0.904);
-    font-size: 3.3em;
-}
-
-div#cityBackground {
-    background-color: rgb(27,13,75);
-    width: 100%;
-    min-height: 100px;
-    margin-top: 0;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-}
-div#description {
-    padding:20px;
-    text-align: center;
-    font-weight: 500;
-    font-size: 1.8em;
-    color:rgba(192, 186, 185, 0.877);
-    border: none;
-  
-}
-/* Mobile layouts */
-@media only screen and (max-width: 600px)  {
-    div#city, div#description, section#weather > label {
-        font-size: 14pt;
-    }
-
-    button#searchButton {
-        font-size: 14pt;
-        height: 2.65em;
-        width: 100%;
-        border:none;
-        border-radius: 50px;
-        background-color:lawngreen;
-    }
-
-    header input#searchBar {
-        width: 100%;
-    } 
-
-    section#weather {
-        margin-left:auto;
-        margin-right:auto;
-    }
-}
-
-
-
